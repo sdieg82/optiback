@@ -17,10 +17,13 @@ const typeDefs = gql`
 
     type Producto {
         id: ID
+        proveedor:Proveedor
         codigo:String
         nombre: String
         existencia: Int
         precio: Float
+        precioCompra: Float
+        ganancia: Float
         creado: String
     }
 
@@ -32,7 +35,20 @@ const typeDefs = gql`
         email: String
         telefono: String
         vendedor: ID
+        creado:String
+        #cedula:String
     }
+
+    type Proveedor {
+        id: ID
+        nombre: String
+        apellido: String
+        direccion: String
+        email: String
+        telefono: String
+    
+    }
+    
     
     type Pedido {
         id: ID
@@ -40,9 +56,11 @@ const typeDefs = gql`
         total: Float
         cliente: Cliente
         vendedor: ID
-        fecha: String
         estado: EstadoPedido
+        creado: String
     }
+
+   
 
     type PedidoGrupo{
         id: ID
@@ -54,6 +72,11 @@ const typeDefs = gql`
     type TopCliente {
         total: Float
         cliente: [Cliente]
+    }
+
+    type productosbajos {
+       
+        producto: [Producto]
     }
 
     type TopVendedor {
@@ -73,17 +96,32 @@ const typeDefs = gql`
         password: String!
     }
 
+    
+
+
     input ProductoInput {
+        proveedor:ID!
         codigo:String!
         nombre: String!
         existencia: Int!
         precio: Float!
+        precioCompra:Float!
+        ganancia:Float!
     }
 
     input ClienteInput {
         nombre: String!
         apellido: String!
         empresa: String!
+        email: String!
+        telefono: String
+        #cedula:String
+    }
+
+    input ProveedorInput{
+        nombre: String!
+        apellido: String!
+        direccion: String!
         email: String!
         telefono: String
     }
@@ -106,6 +144,19 @@ const typeDefs = gql`
         PENDIENTE
         COMPLETADO
         CANCELADO
+    }
+
+    input CompraProductoInput{
+        id: ID
+        cantidad: Int
+        nombre: String
+        precio: Float
+    }
+
+    input CompraInput{
+        compra:[CompraProductoInput]
+        total:Float!
+
     }
 
     type Query {
@@ -132,6 +183,15 @@ const typeDefs = gql`
         mejoresClientes: [TopCliente]
         mejoresVendedores: [TopVendedor]
         buscarProducto(texto: String!) : [Producto]
+
+        #BajoStock
+        bajoStock:[Producto]
+
+        #Proveedores
+        obtenerProveedores:[Proveedor]
+        obtenerProveedor(id:ID!):Proveedor
+
+
     }
 
     type Mutation {
@@ -153,6 +213,16 @@ const typeDefs = gql`
         nuevoPedido(input: PedidoInput): Pedido
         actualizarPedido(id: ID!, input: PedidoInput ) : Pedido
         eliminarPedido(id: ID!) : String
+
+        #Proveedores
+        nuevoProveedor(input: ProveedorInput):Proveedor
+        actualizarProveedor(id:ID!,input:ProveedorInput):Proveedor
+        eliminarProveedor(id: ID!) : String
+
+        #cedula
+        #validarCI(input:ClienteInput):Cliente
+
+      
     }
 `;
 

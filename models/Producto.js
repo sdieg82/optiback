@@ -1,6 +1,13 @@
 const mongoose=require('mongoose');
 
 const ProductosSchema=mongoose.Schema({
+    
+    proveedor:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:'Proveedor'
+    },
+
     nombre:{
         type:String,
         required:true,
@@ -15,8 +22,19 @@ const ProductosSchema=mongoose.Schema({
         type:Number,
         required:true,
         trim:true
-
     },
+
+    precioCompra:{
+        type:Number,
+        required:true,
+        trim:true
+    },
+    ganancia:{
+        type:Number,
+        required:true,
+        trim:true
+    },
+
     codigo:{
         type:String,
         required:true,

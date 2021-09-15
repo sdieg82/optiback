@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-const ClientesSchema=mongoose.Schema({
+const ProveedorSchema=mongoose.Schema({
     nombre:{
         type:String,
         required:true,
@@ -11,12 +11,7 @@ const ClientesSchema=mongoose.Schema({
         required:true,
         trim:true
     },
-    cedula:{
-        type:String,
-        required:true,
-        trim:true
-    },
-    empresa:{
+    direccion:{
         type:String,
         required:true,
         trim:true
@@ -35,10 +30,6 @@ const ClientesSchema=mongoose.Schema({
         type:Date,
         default:Date.now()
     },
-    vendedor:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'Usuario'
-    }
+   
 });
-module.exports=mongoose.model('Cliente',ClientesSchema)
+module.exports=mongoose.model('Proveedor',ProveedorSchema)
